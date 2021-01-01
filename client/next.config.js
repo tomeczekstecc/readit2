@@ -6,8 +6,11 @@ module.exports = {
         test: /\.(js|ts)x?$/,
       },
       use: ['@svgr/webpack'],
-    })
+    });
 
-    return config
+    return config;
   },
-}
+  images: {
+    domains: ['www.gravatar.com', 'localhost'],
+  },
+};
