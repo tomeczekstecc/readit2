@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface Post {
   identifier: string;
   title: string;
@@ -7,6 +9,7 @@ export interface Post {
   username: string;
   createdAt: string;
   updatedAt: string;
+  sub?: Sub,
   // Virtual fields
   url: string;
   voteScore?: number;
@@ -22,6 +25,7 @@ export interface User {
 }
 
 export interface Sub {
+  postCount: ReactNode;
   createdAt: string;
   updatedAt: string;
   name: string;
@@ -34,4 +38,5 @@ posts: Post[],
 // virtuals
   imageUrl: string;
   bannerUrl: string;
+  PostCount?: number
 }
