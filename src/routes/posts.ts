@@ -52,7 +52,7 @@ const getPost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOneOrFail(
       { identifier, slug },
-      { relations: ['sub', 'votes','comments'] }
+      { relations: ['sub', 'votes', 'comments'] }
     );
 
     if (res.locals.user) {
@@ -87,11 +87,29 @@ const commentOnPost = async (req: Request, res: Response) => {
   }
 };
 
+const getPostcomments = async (req: Request, res: Response) => {
+  const { identifier, slug } = req.params;
+
+  try {
+    const post = await Post.findOneOrFail({ identifier, slug });
+    const comments = await Comment.find({
+      where: { post },
+      order: { createdAt: 'DESC' },
+      relations: ['votes'],
+    });
+    return res.json(comments)
+  } catch (err) {
+    console.log(err)
+return res.status(500).json({error: 'Something wenr wrong'})
+  }
+};
+
 const router = Router();
 
 router.post('/', user, auth, createPost);
 router.get('/', user, getPosts);
 router.get('/:identifier/:slug', user, getPost);
 router.post('/:identifier/:slug/comments', user, auth, commentOnPost);
+router.get('/:identifier/:slug/comments', user, getPostcomments);
 
 export default router;

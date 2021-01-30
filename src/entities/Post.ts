@@ -45,7 +45,7 @@ export default class Post extends Entity {
   username: string
 
   @ManyToOne(() => User, (user) => user.posts)
-  @JoinColumn({ name: 'username', referencedColumnName: 'username' })
+
   user: User
 
   @ManyToOne(() => Sub, (sub) => sub.posts)
